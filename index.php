@@ -61,6 +61,11 @@ if($token) {
         echo "<br>Não foi possível inserir o lançamento. Erro: ".$resposta['message'];
     }
 
+    $resposta = $client->buscaLancamentos($token);
+    echo "<pre>";
+    print_r($resposta);
+    echo "</pre>";
+
 } else {
     echo "<br>Não foi possível pegar o token.";
 }

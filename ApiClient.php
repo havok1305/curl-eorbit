@@ -46,6 +46,36 @@ class ApiClient
         return $this->doPost($dados, $headers, $url);
     }
 
+    public function buscaLancamentos($token)
+    {
+        $url = "/lancamentos?limit=100";
+        $headers = [
+            'Content-Type:application/json',
+            'X-Life-Sistemas-Id-Cliente:'.$this->cliente,
+            'Authorization:Bearer '.$token
+        ];
+        return $this->doGet($headers, $url);
+    }
+
+    public function doGet($headers, $url)
+    {
+        $url = $this->url . $url;
+
+        $sessao = curl_init();
+
+        curl_setopt($sessao, CURLOPT_URL, $url);
+
+        curl_setopt($sessao, CURLOPT_HTTPHEADER, $headers);
+
+        curl_setopt($sessao, CURLOPT_RETURNTRANSFER, 1);
+
+        $output = curl_exec($sessao);
+
+        curl_close($sessao);
+
+        return json_decode($output, true);
+    }
+
     public function doPost($postdata, $headers, $url)
     {
         $url = $this->url . $url;
